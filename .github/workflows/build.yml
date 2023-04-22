@@ -1,4 +1,4 @@
-name: Deploy Server update3
+name: Deploy Server update5
 
 on:
   push:
