@@ -1,4 +1,4 @@
-name: Deploy Server Update
+name: Deploy Server Update2
 
 on: push
 
@@ -17,4 +17,4 @@ jobs:
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
     - name: Deploy
       run: |
-        ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} 'echo "Server Deployed!"'
+        ssh -o StrictHostKeyChecking=no -N -L 2222:localhost:22 user@${{ secrets.SERVER_IP }}
