@@ -1,0 +1,20 @@
+name: Deploy Server
+
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install SSH
+      run: sudo apt-get install -y ssh
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+    - name: Deploy
+      run: |
+        ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} 'echo "Server Deployed!"'
